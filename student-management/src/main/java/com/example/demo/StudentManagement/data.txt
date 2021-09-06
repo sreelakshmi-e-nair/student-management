@@ -1,0 +1,58 @@
+{
+   "id":124,
+   "firstName":"Sid",
+   "lastName":"Siva",
+   "dob":"1995-04-22",
+   "communicationAddress":{
+      "house_number":"12/124",
+      "house_name":"YYYY",
+      "street":"street12",
+      "district":"kurva",
+      "state":"MadhyaPradhesh",
+      "zipcode":"966819"
+   },
+   "permanentAddress":{
+      "house_number":"12/124",
+      "house_name":"YYYY",
+      "street":"street12",
+      "district":"kurva",
+      "state":"MadhyaPradhesh",
+      "zipcode":"966819"
+   },
+   "mobile_number":"+1 72778256",
+   "email":"sidsiva@asj.com",
+   "fatherName":"kvarma",
+   "fatherMobile":"+1 278299660",
+   "guardian":"dubsish",
+   "guardianMobile":"+1 779289292",
+   "academicsList":{
+      "department":"cse",
+      "tutor":"mith",
+      "subjectList":[
+         {
+            "name":"graphics",
+            "mentor":"guna",
+            "attendance":76,
+            "internals":"50"
+         },
+         {
+            "name":"database",
+            "mentor":"hiranmay",
+            "attendance":80,
+            "internals":"42"
+         },
+         {
+            "name":"physics",
+            "mentor":"hemanth",
+            "attendance":100,
+            "internals":"98"
+         },
+         {
+            "name":"maths",
+            "mentor":"uytrf",
+            "attendance":80,
+            "internals":"67"
+         }
+      ]
+   }
+}
