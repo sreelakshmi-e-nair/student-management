@@ -25,6 +25,13 @@ public class StudentController {
     public StudentResponseModel getAllStudent(){
         return studentService.getStudent();
     }
+    
+    //Api to update student data
+    @PostMapping("/update/student")
+    public StudentResponseModel updateStudent(@RequestBody StudentModel studentModels){
+
+        return studentService.updateStudent(studentModels);
+    }
 
     //Api to delete a student
     @DeleteMapping("/delete/student")

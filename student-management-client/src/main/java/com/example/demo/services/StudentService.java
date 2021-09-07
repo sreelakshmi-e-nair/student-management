@@ -54,6 +54,20 @@ public class StudentService{
 		 
 	}
 	 
+	 public StudentResponseModel updateStudent(StudentModel studentModel) {
+		 try {
+			 HttpEntity<StudentModel> entity=new HttpEntity<>(studentModel);
+			 return restTemplate.exchange("http://localhost:8080/api/update/student", HttpMethod.POST,entity,StudentResponseModel.class).getBody();
+			 
+		 }catch(HttpClientErrorException e) {
+			 throw new HttpClientErrorException(e.getStatusCode());
+		 }
+		 catch(Exception e) {
+			 throw new StudentGeneralException(HttpStatus.INTERNAL_SERVER_ERROR,"Something went wrong!");
+		 }
+		
+	 }
+	 
 	 public StudentResponseModel deleteStudent(int id) {
 		 try {
 			 HttpEntity<Integer> entity=new HttpEntity<>(id);

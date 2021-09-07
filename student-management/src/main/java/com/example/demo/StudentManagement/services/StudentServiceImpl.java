@@ -65,6 +65,35 @@ public class StudentServiceImpl implements StudentService{
         return responseModel;
     }
 
+
+public StudentResponseModel updateStudent(StudentModel studentModel) {
+	 StudentResponseModel studentResponseModel=new StudentResponseModel();
+     try{
+    	 
+    	 StudentModel findStudent=null;
+    	 findStudent=studentRepository.findById(studentModel.getId()).get();
+    	 if(findStudent!=null) {
+    		 StudentModel studentData= studentRepository.save(studentModel);
+             studentResponseModel.setMessage("Student updated Successfully!");
+             studentResponseModel.setStatusCode(HttpStatus.OK);
+             studentResponseModel.setResult(studentData);
+    	 }
+    	 else {
+    		 throw new NullPointerException();
+    	 }
+         
+     }catch(NullPointerException e){
+         throw new NullPointerException();
+
+    }catch(Exception e)
+     {
+         throw new StudentGeneralException(HttpStatus.INTERNAL_SERVER_ERROR,"Something went wrong!");
+
+     }
+
+     return studentResponseModel;
+ }
+
     @Override
     public StudentResponseModel deleteStudent(int id){
         StudentResponseModel studentResponseModel=new StudentResponseModel();

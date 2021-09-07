@@ -8,5 +8,6 @@ import org.springframework.stereotype.Service;
 public interface StudentService {
     public StudentResponseModel addStudent(StudentModel studentModel);
     public StudentResponseModel getStudent();
+    public StudentResponseModel updateStudent(StudentModel studentModel);
     public StudentResponseModel deleteStudent(int id);
 }
