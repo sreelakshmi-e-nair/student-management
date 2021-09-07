@@ -1,8 +1,11 @@
 package com.example.demo.StudentManagement.services;
 
+import com.example.demo.exceptions.StudentDatabaseException;
+import com.example.demo.exceptions.StudentGeneralException;
 import com.example.demo.StudentManagement.models.StudentModel;
 import com.example.demo.StudentManagement.models.StudentResponseModel;
 import com.example.demo.StudentManagement.repositories.StudentRepository;
+import com.mongodb.MongoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -26,9 +29,8 @@ public class StudentServiceImpl implements StudentService{
             studentResponseModel.setResult(studentData);
         }catch(Exception e)
         {
-            studentResponseModel.setMessage("Something went wrong!");
-            studentResponseModel.setStatusCode(HttpStatus.BAD_GATEWAY);
-            studentResponseModel.setResult(e.getMessage());
+            throw new StudentGeneralException(HttpStatus.INTERNAL_SERVER_ERROR,"Something went wrong!");
+
         }
 
         return studentResponseModel;
@@ -41,21 +43,24 @@ public class StudentServiceImpl implements StudentService{
         try{
             List<StudentModel> studentDataList=  studentRepository.findAll();
             if(studentDataList.size()==0){
-                responseModel.setMessage("No data found!");
-                responseModel.setStatusCode(HttpStatus.OK);
-                responseModel.setResult("No data found!");
+
+                throw new NullPointerException();
             }
             else{
                 responseModel.setMessage("Student data fetched successfully!");
                 responseModel.setStatusCode(HttpStatus.OK);
                 responseModel.setResult(studentDataList);
+
             }
 
-        }catch(Exception e){
+        }catch(NullPointerException e){
+             throw new NullPointerException();
 
-          responseModel.setMessage("Something went wrong!");
-          responseModel.setStatusCode(HttpStatus.BAD_GATEWAY);
-          responseModel.setResult(e.getMessage());
+        }catch (MongoException e){
+               throw new StudentDatabaseException("Database not found!");
+        }
+        catch (Exception e){
+                throw new StudentGeneralException(HttpStatus.INTERNAL_SERVER_ERROR,"Something went wrong!");
         }
         return responseModel;
     }
@@ -65,25 +70,30 @@ public class StudentServiceImpl implements StudentService{
         StudentResponseModel studentResponseModel=new StudentResponseModel();
         try{
             List<StudentModel> studentModel=studentRepository.findAll();
+           
             for (StudentModel student:
                  studentModel) {
                 if(student.getId()==id){
                     studentResponseModel.setResult(student);
+                   
                     studentRepository.deleteById(id);
+            
                     studentResponseModel.setMessage("Student with id "+student.getId() +" deleted successfully!");
                     studentResponseModel.setStatusCode(HttpStatus.OK);
                 }
-                else{
-                    studentResponseModel.setMessage("Student with this id doesn't exist!");
-                    studentResponseModel.setStatusCode(HttpStatus.OK);
-                    studentResponseModel.setResult("No result found");
-                }
+                
             }
+            if(studentResponseModel.getResult()==null) {
+            	throw new NullPointerException();
+            }
+         
 
-        }catch (Exception e){
-            studentResponseModel.setMessage("Something went wrong!");
-            studentResponseModel.setStatusCode(HttpStatus.BAD_GATEWAY);
-            studentResponseModel.setResult(e.getMessage());
+        }catch(NullPointerException e){
+            throw new NullPointerException();
+
+       }catch (Exception e){
+        
+            throw new StudentGeneralException(HttpStatus.INTERNAL_SERVER_ERROR,"Something went wrong!");
         }
         return studentResponseModel;
     }
