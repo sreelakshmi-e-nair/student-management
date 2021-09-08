@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -16,6 +17,18 @@ import com.example.demo.models.StudentModel;
 
 @Service
 public class StudentService{
+	
+	@Value("${studentapplication.postStudent}")
+	private String postUrl;
+	
+	@Value("${studentapplication.getStudent}")
+	private String getUrl;
+	
+	@Value("${studentapplication.updateStudent}")
+	private String updateUrl;
+	
+	@Value("${studentapplication.deleteStudent}")
+	private String deleteUrl;
 
 	private RestTemplate restTemplate;
 	
@@ -28,8 +41,9 @@ public class StudentService{
 	
 	 public StudentResponseModel addStudent(StudentModel studentModel) {
 		 try {
+			 
 			 HttpEntity<StudentModel> entity=new HttpEntity<>(studentModel);
-			 return restTemplate.exchange("http://localhost:8080/api/add/student", HttpMethod.POST,entity,StudentResponseModel.class).getBody();
+			 return restTemplate.exchange(postUrl, HttpMethod.POST,entity,StudentResponseModel.class).getBody();
 			 
 		 }catch(HttpClientErrorException e) {
 			 throw new HttpClientErrorException(e.getStatusCode());
@@ -42,7 +56,7 @@ public class StudentService{
 
 	 public StudentResponseModel getStudent() {
 		 try {
-			 return restTemplate.exchange("http://localhost:8080/api/get/student", HttpMethod.GET, null, StudentResponseModel.class).getBody();
+			 return restTemplate.exchange(getUrl, HttpMethod.GET, null, StudentResponseModel.class).getBody();
 			 
 		 }catch(HttpClientErrorException e) {
 			 throw new HttpClientErrorException(e.getStatusCode());
@@ -57,7 +71,7 @@ public class StudentService{
 	 public StudentResponseModel updateStudent(StudentModel studentModel) {
 		 try {
 			 HttpEntity<StudentModel> entity=new HttpEntity<>(studentModel);
-			 return restTemplate.exchange("http://localhost:8080/api/update/student", HttpMethod.POST,entity,StudentResponseModel.class).getBody();
+			 return restTemplate.exchange(updateUrl, HttpMethod.POST,entity,StudentResponseModel.class).getBody();
 			 
 		 }catch(HttpClientErrorException e) {
 			 throw new HttpClientErrorException(e.getStatusCode());
@@ -71,7 +85,7 @@ public class StudentService{
 	 public StudentResponseModel deleteStudent(int id) {
 		 try {
 			 HttpEntity<Integer> entity=new HttpEntity<>(id);
-			 return restTemplate.exchange("http://localhost:8080/api/delete/student?id="+id, HttpMethod.DELETE,entity,StudentResponseModel.class).getBody();
+			 return restTemplate.exchange(deleteUrl+id, HttpMethod.DELETE,entity,StudentResponseModel.class).getBody();
 		 }catch(HttpClientErrorException e) {
 			 throw new HttpClientErrorException(e.getStatusCode());
 		 }

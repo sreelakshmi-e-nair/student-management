@@ -13,13 +13,13 @@ public class StudentExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(NullPointerException.class)
     protected ResponseEntity<Object> nullPointerException(){
         ApiError apiError=new ApiError(HttpStatus.NOT_FOUND,"Data not found");
-        return buildResponseEntity(apiError);
+        return buildResponseEntity(apiError); 
 
     }
 
     @ExceptionHandler(StudentDatabaseException.class)
     protected ResponseEntity<Object> mongoException(){
-       ApiError apiError=new ApiError(HttpStatus.BAD_GATEWAY,"Database not found");
+       ApiError apiError=new ApiError(HttpStatus.BAD_GATEWAY,"Database not found"); 
         return buildResponseEntity(apiError);
 
     }

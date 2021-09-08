@@ -3,6 +3,7 @@ package com.example.demo.StudentManagement.controllers;
 import com.example.demo.StudentManagement.models.StudentModel;
 import com.example.demo.StudentManagement.models.StudentResponseModel;
 import com.example.demo.StudentManagement.services.StudentService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +15,7 @@ public class StudentController {
     StudentService studentService;
 
     //Api to post student data
-    @PostMapping("/add/student")
+    @PostMapping("/add/student") 
     public StudentResponseModel addStudent(@RequestBody StudentModel studentModels){
 
         return studentService.addStudent(studentModels);

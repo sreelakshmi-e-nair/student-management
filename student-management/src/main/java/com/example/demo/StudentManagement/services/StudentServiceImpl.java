@@ -18,7 +18,7 @@ public class StudentServiceImpl implements StudentService{
 
     @Autowired
     StudentRepository studentRepository;
-
+ 
     @Override
     public StudentResponseModel addStudent(StudentModel studentModel){
         StudentResponseModel studentResponseModel=new StudentResponseModel();
@@ -27,8 +27,8 @@ public class StudentServiceImpl implements StudentService{
             studentResponseModel.setMessage("Student Added Successfully!");
             studentResponseModel.setStatusCode(HttpStatus.OK);
             studentResponseModel.setResult(studentData);
-        }catch(Exception e)
-        {
+        }catch(Exception e) 
+        { 
             throw new StudentGeneralException(HttpStatus.INTERNAL_SERVER_ERROR,"Something went wrong!");
 
         }

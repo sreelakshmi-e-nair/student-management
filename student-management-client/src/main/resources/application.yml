@@ -1,4 +1,9 @@
-
-server.port=8085
+server:
+ port: 8085
+studentapplication:
+ postStudent: 'http://127.0.0.1:8080/api/add/student'
+ getStudent: 'http://127.0.0.1:8080/api/get/student'
+ updateStudent: 'http://127.0.0.1:8080/api/update/student'
+ deleteStudent: 'http://127.0.0.1:8080/api/delete/student?id='
 
 
