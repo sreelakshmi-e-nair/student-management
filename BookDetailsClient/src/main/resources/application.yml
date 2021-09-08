@@ -1,0 +1,5 @@
+server:
+ port: 8085
+bookapplication:
+ getBooks: 'http://127.0.0.1:8080/api/book'
+ post: 'enterurlhere'
