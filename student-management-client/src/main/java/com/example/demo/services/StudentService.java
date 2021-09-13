@@ -6,6 +6,7 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -29,27 +30,30 @@ public class StudentService{
 	
 	@Value("${studentapplication.deleteStudent}")
 	private String deleteUrl;
-
-	private RestTemplate restTemplate;
 	
 	@Autowired
-	 public StudentService(RestTemplateBuilder restTemplateBuilder) {
-		
-		 this.restTemplate=restTemplateBuilder.build();
-		 
-	}
+	private RestTemplate restTemplate;
+	
 	
 	 public StudentResponseModel addStudent(StudentModel studentModel) {
+		 
+		
 		 try {
 			 
+			 
 			 HttpEntity<StudentModel> entity=new HttpEntity<>(studentModel);
-			 return restTemplate.exchange(postUrl, HttpMethod.POST,entity,StudentResponseModel.class).getBody();
+			
+			 ResponseEntity<StudentResponseModel> restData= restTemplate.exchange(postUrl, HttpMethod.POST,entity,StudentResponseModel.class);
+			
+			 return restData.getBody();
 			 
 		 }catch(HttpClientErrorException e) {
 			 throw new HttpClientErrorException(e.getStatusCode());
 		 }
 		 catch(Exception e) {
+			
 			 throw new StudentGeneralException(HttpStatus.INTERNAL_SERVER_ERROR,"Something went wrong!");
+			 
 		 }
 		
 	 }
@@ -85,7 +89,7 @@ public class StudentService{
 	 public StudentResponseModel deleteStudent(int id) {
 		 try {
 			 HttpEntity<Integer> entity=new HttpEntity<>(id);
-			 return restTemplate.exchange(deleteUrl+id, HttpMethod.DELETE,entity,StudentResponseModel.class).getBody();
+			return restTemplate.exchange(deleteUrl+id, HttpMethod.DELETE,entity,StudentResponseModel.class).getBody();
 		 }catch(HttpClientErrorException e) {
 			 throw new HttpClientErrorException(e.getStatusCode());
 		 }

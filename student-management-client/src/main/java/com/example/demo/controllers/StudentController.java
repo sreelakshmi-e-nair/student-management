@@ -17,14 +17,14 @@ public class StudentController {
     @PostMapping("/add/student")
     public StudentResponseModel addStudent(@RequestBody StudentModel studentModels){
 
-        return studentService.addStudent(studentModels);
+        return studentService.addStudent(studentModels); 
     }
 
     //Api to get student data
     @GetMapping("/get/student")
     public StudentResponseModel getAllStudent(){
         return studentService.getStudent();
-        
+         
     }
 
     //Api to update student data
